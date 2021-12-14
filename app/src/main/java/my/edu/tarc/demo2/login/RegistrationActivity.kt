@@ -1,4 +1,4 @@
-package my.edu.tarc.demo2
+package my.edu.tarc.demo2.login
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,6 +8,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_registration.*
+import my.edu.tarc.demo2.R
 
 class RegistrationActivity : AppCompatActivity() {
 

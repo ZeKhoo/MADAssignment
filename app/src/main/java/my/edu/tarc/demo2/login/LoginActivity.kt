@@ -1,4 +1,4 @@
-package my.edu.tarc.demo2
+package my.edu.tarc.demo2.login
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -7,6 +7,7 @@ import android.text.TextUtils
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_login.*
+import my.edu.tarc.demo2.R
 
 class LoginActivity : AppCompatActivity() {
 

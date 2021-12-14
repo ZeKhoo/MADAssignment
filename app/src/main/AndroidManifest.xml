@@ -10,6 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Demo2" >
         <activity
+            android:name=".ScanActivity"
+            android:exported="false"
+            android:screenOrientation="fullSensor"
+            android:stateNotNeeded="true"
+            tools:replace="android:screenOrientation" />
+        <activity
             android:name=".ui.search.SearchActivity"
             android:exported="false"
             android:label="Search" />
