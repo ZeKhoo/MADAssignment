@@ -8,6 +8,7 @@ import android.util.Log
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_login.*
+import my.edu.tarc.demo2.MainActivity
 import my.edu.tarc.demo2.R
 
 class LoginActivity : AppCompatActivity() {
@@ -22,7 +23,7 @@ class LoginActivity : AppCompatActivity() {
 
         val currentuser = auth.currentUser
         if(currentuser != null) {
-            startActivity(Intent(this@LoginActivity, ProfileActivity::class.java))
+            startActivity(Intent(this@LoginActivity, MainActivity::class.java))
             finish()
         }
         login()
@@ -47,7 +48,7 @@ class LoginActivity : AppCompatActivity() {
                 .addOnCompleteListener {
                     if(it.isSuccessful) {
                         Toast.makeText(this@LoginActivity, "Login Successful ", Toast.LENGTH_LONG).show()
-                        startActivity(Intent(this@LoginActivity, ProfileActivity::class.java))
+                        startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                         finish()
                     } else {
                         Toast.makeText(this@LoginActivity, "Login failed, please try again! ", Toast.LENGTH_LONG).show()
