@@ -34,6 +34,16 @@
         android:name="my.edu.tarc.demo2.ui.search.SearchFragDetails"
         android:label="fragment_search_frag_details"
         tools:layout="@layout/fragment_search_frag_details" />
+    <activity
+        android:id="@+id/nav_shared_preference"
+        android:name="my.edu.tarc.demo2.sharedpreference.SharedPreferenceActivity"
+        android:label="activity_shared_preference"
+        tools:layout="@layout/activity_shared_preference" />
+    <activity
+        android:id="@+id/nav_login"
+        android:name="my.edu.tarc.demo2.login.LoginActivity"
+        android:label="activity_login"
+        tools:layout="@layout/activity_login" />
 
 
 </navigation>
