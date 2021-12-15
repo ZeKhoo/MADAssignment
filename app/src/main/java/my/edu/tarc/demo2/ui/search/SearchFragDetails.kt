@@ -47,6 +47,7 @@ class SearchFragDetails : Fragment(){
 //        }
 
 
+
         return root
     }
 

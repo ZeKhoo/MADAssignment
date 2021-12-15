@@ -1,8 +1,8 @@
 {
   "project_info": {
     "project_number": "596844697913",
-    "firebase_url": "https://assignment-4cdb4-default-rtdb.asia-southeast1.firebasedatabase.app",
     "project_id": "assignment-4cdb4",
+    "firebase_url": "https://authlogin-fd959-default-rtdb.asia-southeast1.firebasedatabase.app/",
     "storage_bucket": "assignment-4cdb4.appspot.com"
   },
   "client": [

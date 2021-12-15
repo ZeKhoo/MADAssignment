@@ -35,6 +35,9 @@ class NewInventory : Fragment() {
     var databaseReference :  DatabaseReference? = null
     var database: FirebaseDatabase? = null
 
+    //check whether is Integer
+    val integerChars = '0'..'9'
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -68,55 +71,75 @@ class NewInventory : Fragment() {
         editTextRackId = binding.editTextRackOut
         binding.button.setOnClickListener{
             saveInventory()
-            Toast.makeText(context, R.string.add_success, Toast.LENGTH_SHORT).show()
+
         }
 
     }
 
     private fun saveInventory() {
-        val serial_number = editTextSerialNumber.text.toString()
-        val part_no = editTextPartNo.text.toString()
-        val qty = Integer.parseInt(edittextQty.text.toString())
-        val rack_in = editTextRackIn.text.toString()
-        val rack_out = editTextRackOut.text.toString()
-        val rackId = Integer.parseInt(editTextRackId.text.toString())
 
-        if(serial_number.isEmpty()){
+
+        if(editTextSerialNumber.text.toString().isEmpty()){
             editTextSerialNumber.error = getString(R.string.error)
             return
         }
-        else if (part_no.isEmpty()){
+        else if (editTextPartNo.text.toString().isEmpty()){
             editTextPartNo.error = getString(R.string.error)
             return
         }
-        else if (qty == null){
+        else if (edittextQty.text.toString().isEmpty()){
             edittextQty.error = getString(R.string.error)
             return
         }
-        else if (rack_in.isEmpty()){
+        else if (!isNumber(edittextQty.text.toString()) || !isInteger(edittextQty.text.toString())){
+            edittextQty.error = "Wrong type of values"
+            return
+        }
+        else if (editTextRackIn.text.toString().isEmpty()){
             editTextRackIn.error = getString(R.string.error)
             return
         }
-        else if (rack_out.isEmpty()){
+        else if (editTextRackOut.text.toString().isEmpty()){
             editTextRackOut.error = getString(R.string.error)
             return
         }
-        else if (rackId == null){
+        else if (editTextRackId.text.toString().isEmpty()){
             editTextRackId.error = getString(R.string.error)
             return
         }
+        else if (!isNumber(editTextRackId.text.toString()) || !isInteger(editTextRackId.text.toString())){
+            editTextRackId.error = "Wrong type of values"
+            return
+        }
         else{
+
+            val serial_number = editTextSerialNumber.text.toString()
+            val part_no = editTextPartNo.text.toString()
+            val qty = Integer.parseInt(edittextQty.text.toString())
+            val rack_in = editTextRackIn.text.toString()
+            val rack_out = editTextRackOut.text.toString()
+            val rackId = Integer.parseInt(editTextRackId.text.toString())
+
             val database: DatabaseReference
             database = Firebase.database.reference
 
-            database.child("inventory").child("Serial Number").setValue(serial_number)
-            database.child("inventory").child("Part Number").setValue(part_no)
-            database.child("inventory").child("Quantity").setValue(qty)
-            database.child("inventory").child("Rack In date").setValue(rack_in)
-            database.child("inventory").child("Rack Out Date").setValue(rack_out)
-            database.child("inventory").child("Rack Id").setValue(rackId)
+            database.child("inventory").child(serial_number).child("Serial Number").setValue(serial_number)
+            database.child("inventory").child(serial_number).child("Part Number").setValue(part_no)
+            database.child("inventory").child(serial_number).child("Quantity").setValue(qty)
+            database.child("inventory").child(serial_number).child("Rack In date").setValue(rack_in)
+            database.child("inventory").child(serial_number).child("Rack Out Date").setValue(rack_out)
+            database.child("inventory").child(serial_number).child("Rack Id").setValue(rackId)
+            Toast.makeText(context, R.string.add_success, Toast.LENGTH_SHORT).show()
         }
+        return
     }
+
+    fun isNumber(input: String): Boolean {
+        var dotOccurred = 0
+        return input.all { it in integerChars || it == '.' && dotOccurred++ < 1 }
+    }
+
+    fun isInteger(input: String) = input.all { it in integerChars }
 
     override fun onDestroyView() {
         super.onDestroyView()
