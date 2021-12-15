@@ -1,61 +1,113 @@
 package my.edu.tarc.demo2.ui.search
 
-import android.app.AlertDialog
 import android.content.Context
 import android.content.SharedPreferences
-import android.content.res.Resources
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.Button
-import android.widget.TableLayout
-import android.widget.TableRow
-import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
 import my.edu.tarc.demo2.MainActivity
 import my.edu.tarc.demo2.R
 import my.edu.tarc.demo2.databinding.FragmentSearchFragDetailsBinding
 
-class SearchFragDetails : Fragment() {
+class SearchFragDetails : Fragment(), SearchActivity.MyInterface{
 
     //View Binding
     private var _binding: FragmentSearchFragDetailsBinding? = null
     private val binding get() = _binding!!
+    private lateinit var listener: SearchActivity.MyInterface
 
     private var buttons = arrayOf<Array<Button>>()
 
+    companion object {
+        var CHOICE = ""
+        var ITEM_NAME = ""
+        const val NUM_ROWS: Int = 5
+        const val NUM_COLUMNS: Int = 5
+
+        fun newInstance(chocie: String?, item_name:String?): SearchFragDetails {
+            val fragment = SearchFragDetails()
+
+            val bundle = Bundle().apply {
+                putString(CHOICE, chocie)
+                putString(ITEM_NAME, item_name)
+            }
+
+            fragment.arguments = bundle
+
+            return fragment
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
 //
-//        Log.d("Search Activity", "Oncreate")
+        Log.d("Search Activity", "Oncreate")
 //
 //        //Enable menu in this fragment
-//        setHasOptionsMenu(true)
+        setHasOptionsMenu(true)
 //
 ////        populateButton()
-//    }
-//
-//    override fun onCreateView(
-//        inflater: LayoutInflater,
-//        container: ViewGroup?,
-//        savedInstanceState: Bundle?
-//    ): View? {
-//        // Inflate the layout for this fragment
-//        _binding = FragmentSearchFragDetailsBinding.inflate(inflater, container, false)
-//        val view: View = binding.root
-//        Log.d("Search Details Fragment", "OnCreateView")
-//        val profilePreferences: SharedPreferences = activity?.getPreferences(Context.MODE_PRIVATE)!!
-//
-//        return view
     }
 //
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        _binding = FragmentSearchFragDetailsBinding.inflate(inflater, container, false)
+        val view = binding.root
+        Log.d("Search Details Fragment", "OnCreateView")
+        val profilePreferences: SharedPreferences = activity?.getPreferences(Context.MODE_PRIVATE)!!
+
+        val textView = binding.textView2
+        // Gets the data from the passed bundle
+        val bundle = arguments
+        var message = bundle!!.getString("pass")
+
+        // Sets the derived data (type String) in the TextView
+        textView.text = String.format("%s", message)
+
+//        val choice = arguments?.getString(CHOICE)
+//        val item_name = arguments?.getString(ITEM_NAME)
+//
+//        binding.textView2.text = String.format("%s", item_name)
+//        assignData(choice, item_name)
+        return view
+    }
+
     //Insert code to display and handle Menu
-//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-//        super.onCreateOptionsMenu(menu, inflater)
-//        inflater.inflate(R.menu.fragment_menu_profile, menu)
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.fragment_menu_profile, menu)
+    }
+
+    override fun myAction() {
+        fun setListener(listener: SearchActivity.MyInterface){
+            this.listener = listener
+        }
+    }
+
+//    fun assignData(chocie: String?, item_name: String?){
+//        binding.textView2.text = String.format("%s", chocie)
+//
+//    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("Profile Fragment", "OnDestroy")
+        _binding = null
+
+    }
+
+
+
+//    fun setListener(listener: MyInterface){
+//        this@SearchFragDetails.listener = this.listener
 //    }
 //
 //    private fun populateButton() {
@@ -150,10 +202,6 @@ class SearchFragDetails : Fragment() {
 //        }
 //    }
 
-//    companion object {
-//        const val NUM_ROWS: Int = 5
-//        const val NUM_COLUMNS: Int = 5
-//    }
 
 //    override fun onDestroyView() {
 //        super.onDestroyView()

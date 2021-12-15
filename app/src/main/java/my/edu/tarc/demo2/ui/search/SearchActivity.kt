@@ -2,40 +2,50 @@ package my.edu.tarc.demo2.ui.search
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.View
 import android.widget.*
-import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.navigation.Navigation.findNavController
-import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.navigation.NavigationView
-import my.edu.tarc.demo2.MainActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import my.edu.tarc.demo2.R
-import my.edu.tarc.demo2.databinding.ActivityMainBinding
 import my.edu.tarc.demo2.databinding.ActivitySearchBinding
-//import my.edu.tarc.demo2.ui.search.SearchActivity.Companion.NUM_ROWS
+import my.edu.tarc.demo2.ui.search.SearchFragDetails.Companion.CHOICE
+import my.edu.tarc.demo2.ui.search.SearchFragDetails.Companion.ITEM_NAME
 
 class SearchActivity : AppCompatActivity(){
 
-//    private var buttons =  arrayOf<ArrayList<Button>>(arrayListOf(), arrayListOf(), arrayListOf())
+    //    private var buttons =  arrayOf<ArrayList<Button>>(arrayListOf(), arrayListOf(), arrayListOf())
     private var buttons = arrayOf<Array<Button>>()
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivitySearchBinding
-    private lateinit var Mainbinding: ActivityMainBinding
     private lateinit var drawerLayout: DrawerLayout
+    private lateinit var db: DatabaseReference
 
+    lateinit var auth: FirebaseAuth
+    var databaseReference :  DatabaseReference? = null
+    var database: FirebaseDatabase? = null
+
+    interface MyInterface{
+        fun myAction()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
+
+        auth = FirebaseAuth.getInstance()
+        database = FirebaseDatabase.getInstance()
+        databaseReference = database?.reference!!.child("profile")
+
+        // Write a message to the database
+        val database = Firebase.database
+        val myRef = database.getReference("message")
+
+        myRef.setValue("Hello, World!")
 
         binding = ActivitySearchBinding.inflate(layoutInflater)
 //        binding = ActivitySearchBinding.inflate(inflater, container, false)
@@ -62,6 +72,7 @@ class SearchActivity : AppCompatActivity(){
 
 //        actionBar.title = "Search"
 
+        //Link frame into other fragment
         var fManager = supportFragmentManager
 //
         var tx = fManager.beginTransaction()
@@ -69,19 +80,62 @@ class SearchActivity : AppCompatActivity(){
         tx.addToBackStack(null)
         tx.commit()
 
-        binding.buttonTransaction.setOnClickListener{
+        var choice: String?
+//        var item_name = binding.editTextItemName1.text.toString()
+
+        binding.radioGroup.setOnCheckedChangeListener{radioGroup, i ->
+            var rb = findViewById<RadioButton>(i)
+
+            if (rb != null){
+                choice = rb.text.toString()
+            }
+            if (i == null){
+                Toast.makeText(this,"Please select Serial Number/ Part Number",Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        var mEditText: String? = binding.editTextItemName1.text.toString()
+        val mFragmentManager = supportFragmentManager
+        val mFragmentTransaction = mFragmentManager.beginTransaction()
+        val mFragment = SearchFragDetails()
+
+
+        binding.buttonDetails.setOnClickListener {
+            if(binding.editTextItemName1.text.isNotEmpty()){
+                var item_name = binding.editTextItemName1.text.toString()
+                //Pass value into search Details fragment
+                val mBundle = Bundle()
+                mBundle.putString("pass",item_name)
+                mFragment.arguments = mBundle
+                mFragmentTransaction.add(R.id.frag, mFragment).commit()
+            }else{
+                binding.editTextItemName1.error = getString(R.string.error)
+                return@setOnClickListener
+            }
+
+
             var tx = fManager.beginTransaction()
             tx.replace(R.id.frag, SearchFragDetails())
             tx.addToBackStack(null)
             tx.commit()
         }
 
-        binding.buttonDetails.setOnClickListener {
+        binding.buttonTransaction.setOnClickListener {
             var tx = fManager.beginTransaction()
-            tx.replace(R.id.frag, SearchFragDetails())
+            tx.replace(R.id.frag, SearchFragTransaction())
             tx.addToBackStack(null)
             tx.commit()
         }
+
+        binding.buttonClear.setOnClickListener{
+            binding.editTextItemName1.text.clear()
+            binding.radioGroup.clearCheck()
+            Toast.makeText(this,"Clear Successful!!",Toast.LENGTH_SHORT).show();
+        }
+
+
+
+
 
 //        //Toggle Bar Animation
 //        val toggle = ActionBarDrawerToggle(this, drawerLayout, binding.appBarSearch.toolbar,
@@ -99,6 +153,16 @@ class SearchActivity : AppCompatActivity(){
             super.onBackPressed()
         }
     }
+
+
+
+//    override fun myAction() {
+//
+//
+//        fun setListener(listener: SearchFragDetails.MyInterface){
+//            this.listener = listener
+//        }
+//    }
 
         //Place fragment details into search Activity
 //        val detailsFragment: SearchFragDetails
@@ -161,6 +225,8 @@ class SearchActivity : AppCompatActivity(){
 //    }
 
 //    companion object {
+//        const val CHOICE: String? = null
+//        const val ITEM_NAME: String? = null
 //        const val NUM_ROWS: Int = 5
 //        const val NUM_COLUMNS: Int = 5
 //    }
