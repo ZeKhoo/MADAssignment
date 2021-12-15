@@ -25,6 +25,7 @@ class ScanActivity : AppCompatActivity() {
 
                     if (result.contents != null) {
                         // Do something with the contents (this is usually a URL)
+
                         println(result.contents)
                     }
                 }

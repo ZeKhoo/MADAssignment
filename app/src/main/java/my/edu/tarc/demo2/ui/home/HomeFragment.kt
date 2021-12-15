@@ -8,8 +8,8 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import my.edu.tarc.demo2.R
 import my.edu.tarc.demo2.databinding.FragmentHomeBinding
+
 
 class HomeFragment : Fragment() {
 
@@ -20,10 +20,12 @@ class HomeFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
+
     ): View? {
         homeViewModel =
             ViewModelProvider(this).get(HomeViewModel::class.java)

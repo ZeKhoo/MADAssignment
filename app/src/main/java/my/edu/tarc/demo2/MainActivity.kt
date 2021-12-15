@@ -1,6 +1,7 @@
 package my.edu.tarc.demo2
 
 import android.content.ClipData
+import android.content.Intent
 import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -23,7 +24,9 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
+import com.google.firebase.auth.FirebaseAuth
 import my.edu.tarc.demo2.databinding.ActivityMainBinding
+import my.edu.tarc.demo2.login.LoginActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -58,6 +61,7 @@ class MainActivity : AppCompatActivity() {
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
     }
+
 
     @Override
     override fun onBackPressed() {

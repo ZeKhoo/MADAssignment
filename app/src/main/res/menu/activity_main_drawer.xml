@@ -11,6 +11,11 @@
             android:title="@string/register" />
 
         <item
+            android:id="@+id/nav_scan"
+            android:icon="@drawable/ic_baseline_qr_code_scanner_24"
+            android:title="@string/scan" />
+
+        <item
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_menu_camera"
             android:title="@string/menu_home" />
@@ -22,6 +27,11 @@
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="@string/menu_slideshow" />
+
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_baseline_keyboard_backspace_24"
+            android:title="@string/logout" />
 
     </group>
 

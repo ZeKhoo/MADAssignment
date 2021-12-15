@@ -4,12 +4,13 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_login.*
 import my.edu.tarc.demo2.MainActivity
 import my.edu.tarc.demo2.R
+
+
 
 class LoginActivity : AppCompatActivity() {
 
@@ -21,11 +22,11 @@ class LoginActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
 
-        val currentuser = auth.currentUser
-        if(currentuser != null) {
-            startActivity(Intent(this@LoginActivity, MainActivity::class.java))
-            finish()
-        }
+//        val currentuser = auth.currentUser
+//        if(currentuser != null) {
+//            startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+//            finish()
+//        }
         login()
     }
 
@@ -41,7 +42,6 @@ class LoginActivity : AppCompatActivity() {
                 editTextTextPassword.setError("Please enter password")
                 return@setOnClickListener
             }
-
 
 
           auth.signInWithEmailAndPassword(editTextTextEmail.text.toString(), editTextTextPassword.text.toString())
