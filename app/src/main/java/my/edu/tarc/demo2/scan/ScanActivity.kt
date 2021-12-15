@@ -26,6 +26,7 @@ class ScanActivity : AppCompatActivity() {
                     if (result.contents != null) {
                         // Do something with the contents (this is usually a URL)
 
+
                         println(result.contents)
                     }
                 }
@@ -42,7 +43,7 @@ class ScanActivity : AppCompatActivity() {
         // QR Code Format
         scanner.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE)
         // Set Text Prompt at Bottom of QR code Scanner Activity
-        scanner.setPrompt("QR Code Scanner Prompt Text")
+         scanner.setPrompt("Scan Your Code Here")
         // Start Scanner (don't use initiateScan() unless if you want to use OnActivityResult)
         mQrResultLauncher.launch(scanner.createScanIntent())
     }
