@@ -34,6 +34,26 @@
         android:name="my.edu.tarc.demo2.ui.search.SearchFragDetails"
         android:label="fragment_search_frag_details"
         tools:layout="@layout/fragment_search_frag_details" />
+    <activity
+        android:id="@+id/nav_login"
+        android:name="my.edu.tarc.demo2.login.LoginActivity"
+        android:label="activity_login"
+        tools:layout="@layout/activity_login" />
+    <activity
+        android:id="@+id/nav_register"
+        android:name="my.edu.tarc.demo2.login.RegistrationActivity"
+        android:label="activity_registration"
+        tools:layout="@layout/activity_registration" />
+    <activity
+        android:id="@+id/nav_logout"
+        android:name="my.edu.tarc.demo2.login.SignoutActivity"
+        android:label="activity_signout"
+        tools:layout="@layout/activity_signout" />
+    <activity
+        android:id="@+id/nav_scan"
+        android:name="my.edu.tarc.demo2.scan.ScanActivity"
+        android:label="activity_scan"
+        tools:layout="@layout/activity_scan" />
 
 
 </navigation>
