@@ -24,8 +24,6 @@ class ScanActivity : AppCompatActivity() {
                     val result = IntentIntegrator.parseActivityResult(it.resultCode, it.data)
 
                     if (result.contents != null) {
-                        // Do something with the contents (this is usually a URL)
-
 
                         println(result.contents)
                     }
