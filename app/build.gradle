@@ -64,6 +64,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-functions-ktx:20.0.1'
     implementation 'com.google.firebase:firebase-common-ktx:20.0.0'
     implementation 'com.google.firebase:firebase-database-ktx:20.0.3'
+    implementation 'androidx.room:room-common:2.3.0'
 
 
     testImplementation 'junit:junit:4.13.2'
@@ -76,5 +77,6 @@ dependencies {
     // Declare the dependency for the Realtime Database library
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation 'com.google.firebase:firebase-database'
+
 
 }

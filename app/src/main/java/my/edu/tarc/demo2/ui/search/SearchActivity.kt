@@ -13,8 +13,7 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import my.edu.tarc.demo2.R
 import my.edu.tarc.demo2.databinding.ActivitySearchBinding
-import my.edu.tarc.demo2.ui.search.SearchFragDetails.Companion.CHOICE
-import my.edu.tarc.demo2.ui.search.SearchFragDetails.Companion.ITEM_NAME
+import my.edu.tarc.demo2.ui.New_Inventory.NewInventory
 
 class SearchActivity : AppCompatActivity(){
 
@@ -39,11 +38,11 @@ class SearchActivity : AppCompatActivity(){
 
         auth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance()
-        databaseReference = database?.reference!!.child("profile")
+        databaseReference = database?.reference!!.child("inventory")
 
         // Write a message to the database
         val database = Firebase.database
-        val myRef = database.getReference("message")
+        val myRef = database.getReference("inventory")
 
         myRef.setValue("Hello, World!")
 
@@ -74,55 +73,61 @@ class SearchActivity : AppCompatActivity(){
 
         //Link frame into other fragment
         var fManager = supportFragmentManager
-//
         var tx = fManager.beginTransaction()
         tx.add(R.id.frag, SearchFragTransaction())
         tx.addToBackStack(null)
         tx.commit()
 
-        var choice: String?
-//        var item_name = binding.editTextItemName1.text.toString()
+        //Declare contant
+        var choice: String? = null
+        var item_name: String?
 
+        //Transfer valeu from activity to fragment
+        val mFragmentManager = supportFragmentManager
+        val mFragmentTransaction = mFragmentManager.beginTransaction()
+        val mFragment = SearchFragDetails()
+
+        //Radio Button Error Message
         binding.radioGroup.setOnCheckedChangeListener{radioGroup, i ->
             var rb = findViewById<RadioButton>(i)
 
             if (rb != null){
                 choice = rb.text.toString()
             }
-            if (i == null){
+            else{
                 Toast.makeText(this,"Please select Serial Number/ Part Number",Toast.LENGTH_SHORT).show();
             }
         }
 
-        var mEditText: String? = binding.editTextItemName1.text.toString()
-        val mFragmentManager = supportFragmentManager
-        val mFragmentTransaction = mFragmentManager.beginTransaction()
-        val mFragment = SearchFragDetails()
-
-
+        //setActivity with details
         binding.buttonDetails.setOnClickListener {
+
+            //edittextName error message
             if(binding.editTextItemName1.text.isNotEmpty()){
-                var item_name = binding.editTextItemName1.text.toString()
-                //Pass value into search Details fragment
-                val mBundle = Bundle()
-                mBundle.putString("pass",item_name)
-                mFragment.arguments = mBundle
-                mFragmentTransaction.add(R.id.frag, mFragment).commit()
+                item_name = binding.editTextItemName1.text.toString()
             }else{
                 binding.editTextItemName1.error = getString(R.string.error)
                 return@setOnClickListener
             }
 
+            //Pass chocie and item_name value
+            val mBundle = Bundle()
+            mBundle.putString("choice", choice)
+            mBundle.putString("itemName", item_name)
+            mFragment.arguments = mBundle
+            mFragmentTransaction.add(R.id.frag, mFragment).commit()
+
+            readData(item_name!!)
 
             var tx = fManager.beginTransaction()
-            tx.replace(R.id.frag, SearchFragDetails())
+            tx.replace(R.id.frag, NewInventory())
             tx.addToBackStack(null)
             tx.commit()
         }
 
         binding.buttonTransaction.setOnClickListener {
             var tx = fManager.beginTransaction()
-            tx.replace(R.id.frag, SearchFragTransaction())
+            tx.replace(R.id.frag, SearchFragDetails())
             tx.addToBackStack(null)
             tx.commit()
         }
@@ -133,15 +138,18 @@ class SearchActivity : AppCompatActivity(){
             Toast.makeText(this,"Clear Successful!!",Toast.LENGTH_SHORT).show();
         }
 
-
-
-
-
 //        //Toggle Bar Animation
 //        val toggle = ActionBarDrawerToggle(this, drawerLayout, binding.appBarSearch.toolbar,
 //            R.string.navigation_drawer_open, R.string.nav_drawer_close)
 //        drawerLayout.addDrawerListener(toggle)
 //        toggle.syncState()
+    }
+
+    private fun readData(itemName: String) {
+        val database: DatabaseReference
+        database = Firebase.database.reference
+
+        database.child("inventoryy").child(itemName)
     }
 
     @Override
@@ -152,6 +160,11 @@ class SearchActivity : AppCompatActivity(){
         else {
             super.onBackPressed()
         }
+    }
+
+    companion object{
+        const val CHOICE = "my.edu.tarc.demo2.ui.search.choice"
+        const val ITEM_NAME = "my.edu.tarc.demo2.ui.search.item_name"
     }
 
 
