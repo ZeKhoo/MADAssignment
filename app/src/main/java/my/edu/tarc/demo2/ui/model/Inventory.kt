@@ -13,6 +13,8 @@ data class Inventory(
     val rack_id: Int?
     ){
 
+    constructor():this("", "", 0, "", "", 0)
+
     override fun toString(): String {
         return super.toString()
     }

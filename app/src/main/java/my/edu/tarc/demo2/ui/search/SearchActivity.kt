@@ -24,7 +24,6 @@ class SearchActivity : AppCompatActivity(){
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var db: DatabaseReference
 
-    lateinit var auth: FirebaseAuth
     var databaseReference :  DatabaseReference? = null
     var database: FirebaseDatabase? = null
 
@@ -36,15 +35,14 @@ class SearchActivity : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
 
-        auth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance()
         databaseReference = database?.reference!!.child("inventory")
 
         // Write a message to the database
-        val database = Firebase.database
-        val myRef = database.getReference("inventory")
-
-        myRef.setValue("Hello, World!")
+//        val database = Firebase.database
+//        val myRef = database.getReference("inventory")
+//
+//        myRef.setValue("Hello, World!")
 
         binding = ActivitySearchBinding.inflate(layoutInflater)
 //        binding = ActivitySearchBinding.inflate(inflater, container, false)
@@ -120,7 +118,7 @@ class SearchActivity : AppCompatActivity(){
             readData(item_name!!)
 
             var tx = fManager.beginTransaction()
-            tx.replace(R.id.frag, NewInventory())
+            tx.replace(R.id.frag, SearchFragDetails())
             tx.addToBackStack(null)
             tx.commit()
         }
