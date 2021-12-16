@@ -3,6 +3,7 @@ package my.edu.tarc.demo2.ui.search
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.*
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.ui.AppBarConfiguration
@@ -75,67 +76,60 @@ class SearchActivity : AppCompatActivity(){
         tx.add(R.id.frag, SearchFragDetails())
         tx.addToBackStack(null)
         tx.commit()
-
-        //Declare contant
-        var choice: String? = null
-        var item_name: String?
-
-        //Transfer valeu from activity to fragment
-        val mFragmentManager = supportFragmentManager
-        val mFragmentTransaction = mFragmentManager.beginTransaction()
-        val mFragment = SearchFragDetails()
-
-        //Radio Button Error Message
-        binding.radioGroup.setOnCheckedChangeListener{radioGroup, i ->
-            var rb = findViewById<RadioButton>(i)
-
-            if (rb != null){
-                choice = rb.text.toString()
-            }
-            else{
-                Toast.makeText(this,"Please select Serial Number/ Part Number",Toast.LENGTH_SHORT).show();
-            }
-        }
-
-        //setActivity with details
-        binding.buttonDetails.setOnClickListener {
-
-            //edittextName error message
-            if(binding.editTextItemName1.text.isNotEmpty()){
-                item_name = binding.editTextItemName1.text.toString()
-            }else{
-                binding.editTextItemName1.error = getString(R.string.error)
-                return@setOnClickListener
-            }
-
-            //Pass chocie and item_name value
-            val mBundle = Bundle()
-            mBundle.putString("choice", choice)
-            mBundle.putString("itemName", item_name)
-            mFragment.arguments = mBundle
-            mFragmentTransaction.add(R.id.frag, mFragment).commit()
-
-            readData(item_name!!)
-
-            var tx = fManager.beginTransaction()
-            tx.replace(R.id.frag, SearchFragDetails())
-            tx.addToBackStack(null)
-            tx.commit()
-        }
-
-//        binding.buttonTransaction.setOnClickListener {
+//
+//        //Declare contant
+//        var choice: String? = null
+//        var item_name: String?
+//
+//        //Transfer valeu from activity to fragment
+//        val mFragmentManager = supportFragmentManager
+//        val mFragmentTransaction = mFragmentManager.beginTransaction()
+//        val mFragment = SearchFragDetails()
+//
+//        //Radio Button Error Message
+//        binding.radioGroup.setOnCheckedChangeListener{radioGroup, i ->
+//            var rb = findViewById<RadioButton>(i)
+//
+//            if (rb != null){
+//                choice = rb.text.toString()
+//            }
+//            else{
+//                Toast.makeText(this,"Please select Serial Number/ Part Number",Toast.LENGTH_SHORT).show();
+//            }
+//        }
+//
+//        //setActivity with details
+//        binding.buttonDetails.setOnClickListener {
+//
+//            //edittextName error message
+//            if(binding.editTextItemName1.text.isNotEmpty()){
+//                item_name = binding.editTextItemName1.text.toString()
+//            }else{
+//                binding.editTextItemName1.error = getString(R.string.error)
+//                return@setOnClickListener
+//            }
+//
+//            //Pass chocie and item_name value
+//            val mBundle = Bundle()
+//            mBundle.putString("choice", choice)
+//            mBundle.putString("itemName", item_name)
+//            mFragment.arguments = mBundle
+//            mFragmentTransaction.add(R.id.frag, mFragment).commit()
+//
+//            readData(item_name!!)
+//
 //            var tx = fManager.beginTransaction()
 //            tx.replace(R.id.frag, SearchFragDetails())
 //            tx.addToBackStack(null)
 //            tx.commit()
 //        }
-
-        binding.buttonClear.setOnClickListener{
-            binding.editTextItemName1.text.clear()
-            binding.radioGroup.clearCheck()
-            Toast.makeText(this,"Clear Successful!!",Toast.LENGTH_SHORT).show();
-        }
-
+//
+//        binding.buttonClear.setOnClickListener{
+//            binding.editTextItemName1.text.clear()
+//            binding.radioGroup.clearCheck()
+//            Toast.makeText(this,"Clear Successful!!",Toast.LENGTH_SHORT).show();
+//        }
+//
 //        //Toggle Bar Animation
 //        val toggle = ActionBarDrawerToggle(this, drawerLayout, binding.appBarSearch.toolbar,
 //            R.string.navigation_drawer_open, R.string.nav_drawer_close)

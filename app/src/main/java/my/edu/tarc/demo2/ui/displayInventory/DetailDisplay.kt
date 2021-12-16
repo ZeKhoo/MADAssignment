@@ -1,4 +1,4 @@
-package my.edu.tarc.demo2.ui.search
+package my.edu.tarc.demo2.ui.displayInventory
 
 import android.annotation.SuppressLint
 import android.content.Context

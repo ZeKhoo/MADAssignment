@@ -64,4 +64,6 @@
     <string name="error">Value Required</string>
     <string name="title_activity_sign_in">SignInActivity</string>
     <string name="add_success">Added Successful!!</string>
+
+    <string name="add_inventory">Add Inventory</string>
 </resources>

@@ -37,11 +37,11 @@
             <item
                 android:id="@+id/nav_searchActivity"
                 android:icon="@drawable/ic_baseline_search_24"
-                android:title="@string/search" />
+                android:title="@string/search"/>
             <item
                 android:id="@+id/nav_add_inventory"
                 android:icon="@drawable/ic_baseline_add_24"
-                android:title="Details" />
+                android:title="@string/add_inventory" />
 
             <item
                 android:id="@+id/nav_displayViewActivity"
