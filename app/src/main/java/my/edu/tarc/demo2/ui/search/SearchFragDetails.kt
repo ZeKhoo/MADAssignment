@@ -1,162 +1,142 @@
 package my.edu.tarc.demo2.ui.search
 
-import android.app.AlertDialog
 import android.content.Context
 import android.content.SharedPreferences
-import android.content.res.Resources
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import androidx.fragment.app.Fragment
-import android.widget.Button
-import android.widget.TableLayout
-import android.widget.TableRow
+import android.widget.EditText
+import android.widget.ListView
+import android.widget.TextView
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
-import my.edu.tarc.demo2.MainActivity
+import androidx.fragment.app.Fragment
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.Task
+import com.google.common.collect.Sets
+import com.google.firebase.database.*
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import my.edu.tarc.demo2.R
+import my.edu.tarc.demo2.databinding.FragmentNewInventoryBinding
 import my.edu.tarc.demo2.databinding.FragmentSearchFragDetailsBinding
+import my.edu.tarc.demo2.ui.model.Inventory
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.AbstractList
 
-class SearchFragDetails : Fragment() {
+class SearchFragDetails : Fragment(){
 
     //View Binding
     private var _binding: FragmentSearchFragDetailsBinding? = null
     private val binding get() = _binding!!
 
-    private var buttons = arrayOf<Array<Button>>()
+    lateinit var editTextSerialNumber: TextView
+    lateinit var editTextPartNo: TextView
+    lateinit var edittextQty: TextView
+    lateinit var editTextRackIn: TextView
+    lateinit var editTextRackOut: TextView
+    lateinit var editTextRackId: TextView
+    lateinit var inventoryList: MutableList<Inventory>
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-//
-//        Log.d("Search Activity", "Oncreate")
-//
-//        //Enable menu in this fragment
-//        setHasOptionsMenu(true)
-//
-////        populateButton()
-//    }
-//
-//    override fun onCreateView(
-//        inflater: LayoutInflater,
-//        container: ViewGroup?,
-//        savedInstanceState: Bundle?
-//    ): View? {
-//        // Inflate the layout for this fragment
-//        _binding = FragmentSearchFragDetailsBinding.inflate(inflater, container, false)
-//        val view: View = binding.root
-//        Log.d("Search Details Fragment", "OnCreateView")
-//        val profilePreferences: SharedPreferences = activity?.getPreferences(Context.MODE_PRIVATE)!!
-//
-//        return view
+    var databaseReference :  DatabaseReference? = null
+//    var database: FirebaseDatabase? = null
+    lateinit var ref: DatabaseReference
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding = FragmentSearchFragDetailsBinding.inflate(inflater, container, false)
+        val root: View = binding.root
+
+        inventoryList = mutableListOf()
+        ref = FirebaseDatabase.getInstance().getReference("inventory")
+
+        //Gets the data from the passed bundle
+        val bundle = arguments
+        val choice = bundle!!.getString("choice")
+        val item_name = bundle!!.getString("itemName")
+
+
+        //Sets the derived data (type String) in the TextView
+//        if (message != null) {
+//            binding.textView2.text = message
+//        }
+        readData(choice, item_name)
+        return root
     }
-//
-    //Insert code to display and handle Menu
-//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-//        super.onCreateOptionsMenu(menu, inflater)
-//        inflater.inflate(R.menu.fragment_menu_profile, menu)
-//    }
-//
-//    private fun populateButton() {
-//        val table = binding.mapLayout
-////        var param: TableLayout.LayoutParams
-////
-//        for (row in 1..SearchFragDetails.NUM_ROWS) {
-//            val tableRow: TableRow = TableRow(context)
-//            tableRow.setLayoutParams(
-//                TableLayout.LayoutParams(
-//                    TableLayout.LayoutParams.MATCH_PARENT,
-//                    TableLayout.LayoutParams.MATCH_PARENT,
-//                    1.0f
-//                )
-//            )
-////            table.addView(tableRow)
-//            binding.mapLayout.addView(tableRow)
-////
-//            for (col in 1..SearchFragDetails.NUM_COLUMNS) {
-//                val FINAL_COL = col
-//                val FINAL_ROW = row
-//
-//
-//                val button: Button = Button(context)
-//                button.setLayoutParams(
-//                    TableRow.LayoutParams(
-//                        TableRow.LayoutParams.MATCH_PARENT,
-//                        TableRow.LayoutParams.MATCH_PARENT,
-//                        1.0f
-//                    )
-//                )
-//
-//
-//                //Set button name
-//                button.setText("" + row + "," + col)
-//
-//                //Make text not clip on small button
-//                button.setPadding(0, 0, 0, 0)
-//
-//                button.setOnClickListener{ view ->
-//                    //Does not scale image.
-//                    button.setBackgroundResource(R.drawable.ic_menu_camera)
-//                    gridButtonCLicked(FINAL_COL, FINAL_ROW)
-//                }
-//
-//                tableRow.addView(button)
-//                buttons[row][col] = button
-//            }
-//        }
-//    }
-//
-//    fun gridButtonCLicked(col: Int, row: Int){
-//        Toast.makeText(context, "Button cliecked: "+row+","+col, Toast.LENGTH_SHORT).show()
-//        val button: Button = buttons[row][col]
-//
-//        //Lock Button Size
-//        lockButtonSize()
-//
-//        //Does not scale image.
-//        button.setBackgroundResource(R.drawable.ic_menu_camera)
-//
-//        //Scale image to button
-//        var newWidth: Int = button.getWidth()
-//        var newHeight: Int = button.getHeight()
-//        val originalBitmap: Bitmap =  BitmapFactory.decodeResource(resources, R.drawable.ic_baseline_pin_drop_24)
-//        val scaledBitmap: Bitmap = Bitmap.createScaledBitmap(originalBitmap, newWidth, newHeight, true)
-//        val resource: Resources = getResources()
-//        button.setBackgroundResource(R.drawable.ic_baseline_pin_drop_24)
-//        //button.background = ContextCompat.getDrawable(this, R.drawable.ic_baseline_pin_drop_24\)
-//
-//        //Change text in the button
-//        button.setText(""+col)
-//
-//        //Disable click on button
-//        button.isEnabled = false
-//        button.isClickable = false
-//    }
-//
-//    private fun lockButtonSize() {
-//        for (i in 0..SearchActivity.NUM_ROWS){
-//            for (j in 0..SearchActivity.NUM_COLUMNS){
-//                val button:Button = buttons[i][j]
-//
-//                var width: Int = button.width
-//                button.minWidth = width
-//                button.maxWidth = width
-//
-//                var height: Int = button.height
-//                button.minHeight = height
-//                button.maxHeight = height
-//            }
-//        }
-//    }
 
-//    companion object {
-//        const val NUM_ROWS: Int = 5
-//        const val NUM_COLUMNS: Int = 5
-//    }
+    private fun readData(choice: String?, item_no: String?) {
 
-//    override fun onDestroyView() {
-//        super.onDestroyView()
-//        _binding = null
-//    }
+        val database: DatabaseReference
+        database = Firebase.database.reference
+
+        val reference = FirebaseDatabase.getInstance().getReference("inventory")
+
+        if (choice == "Serial Number"){
+            reference.child("Serial Number").get().addOnCompleteListener(OnCompleteListener {
+                fun onComple(task: Task<DataSnapshot>){
+                    if(task.isSuccessful){
+                        if (task.getResult().exists()){
+                            Toast.makeText(context, "Read Successful", Toast.LENGTH_SHORT).show()
+                            val dataSnapshot = task.getResult()
+
+                            val serial_no = dataSnapshot.child("Serial Number").getValue().toString()
+//                            val part_no = binding.textView10
+//                            val qty = binding.textView11
+//                            val date_rackin = binding.textView12
+//                            val date_rackout = binding.textView13
+//                            val rackId = binding.textView14
+                            binding.textView9.setText(serial_no)
+
+
+                        }
+                        else{
+                            Toast.makeText(context, "Part Number doesn't exist", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                    else{
+                        Toast.makeText(context, "Failed to read", Toast.LENGTH_SHORT).show()
+                    }
+
+                }
+            })
+        }
+
+        val textViewSerialNumber = binding.textView9
+        val textViewPartNo = binding.textView10
+        val textViewQty = binding.textView11
+        val textViewRackIn = binding.textView12
+        val textViewRackOut = binding.textView13
+        val textViewRackId = binding.textView14
+
+        ref.addValueEventListener(object: ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot!!.exists()){
+                    inventoryList.clear()
+                    for (i in snapshot.children){
+                        val value = i.getValue(Inventory::class.java)
+                        inventoryList.add(value!!)
+                    }
+
+
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.w("Failed to read value.", error.toException())
+            }
+
+        })
+
+
+
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
 }

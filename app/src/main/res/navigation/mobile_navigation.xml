@@ -13,10 +13,10 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="my.edu.tarc.demo2.ui.gallery.GalleryFragment"
+        android:id="@+id/nav_add_inventory"
+        android:name="my.edu.tarc.demo2.ui.New_Inventory.NewInventory"
         android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        tools:layout="@layout/fragment_new_inventory" />
 
     <fragment
         android:id="@+id/nav_slideshow"
@@ -29,11 +29,6 @@
         android:name="my.edu.tarc.demo2.ui.search.SearchActivity"
         android:label="SearchActivity"
         tools:layout="@layout/activity_search" />
-    <fragment
-        android:id="@+id/nav_searchFragDetails"
-        android:name="my.edu.tarc.demo2.ui.search.SearchFragDetails"
-        android:label="fragment_search_frag_details"
-        tools:layout="@layout/fragment_search_frag_details" />
     <activity
         android:id="@+id/nav_login"
         android:name="my.edu.tarc.demo2.login.LoginActivity"
@@ -54,6 +49,11 @@
         android:name="my.edu.tarc.demo2.scan.ScanActivity"
         android:label="activity_scan"
         tools:layout="@layout/activity_scan" />
+    <fragment
+        android:id="@+id/nav_searchFragDetails"
+        android:name="my.edu.tarc.demo2.ui.search.SearchFragDetails"
+        android:label="fragment_search_frag_details"
+        tools:layout="@layout/fragment_search_frag_details" />
 
 
 </navigation>
