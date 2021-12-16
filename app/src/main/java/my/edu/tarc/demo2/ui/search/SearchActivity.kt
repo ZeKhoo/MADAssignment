@@ -72,7 +72,7 @@ class SearchActivity : AppCompatActivity(){
         //Link frame into other fragment
         var fManager = supportFragmentManager
         var tx = fManager.beginTransaction()
-        tx.add(R.id.frag, SearchFragTransaction())
+        tx.add(R.id.frag, SearchFragDetails())
         tx.addToBackStack(null)
         tx.commit()
 
@@ -123,12 +123,12 @@ class SearchActivity : AppCompatActivity(){
             tx.commit()
         }
 
-        binding.buttonTransaction.setOnClickListener {
-            var tx = fManager.beginTransaction()
-            tx.replace(R.id.frag, SearchFragDetails())
-            tx.addToBackStack(null)
-            tx.commit()
-        }
+//        binding.buttonTransaction.setOnClickListener {
+//            var tx = fManager.beginTransaction()
+//            tx.replace(R.id.frag, SearchFragDetails())
+//            tx.addToBackStack(null)
+//            tx.commit()
+//        }
 
         binding.buttonClear.setOnClickListener{
             binding.editTextItemName1.text.clear()

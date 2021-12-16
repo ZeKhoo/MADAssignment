@@ -39,7 +39,6 @@ class SearchFragDetails : Fragment(){
     lateinit var inventoryList: MutableList<Inventory>
 
     var databaseReference :  DatabaseReference? = null
-//    var database: FirebaseDatabase? = null
     lateinit var ref: DatabaseReference
 
     override fun onCreateView(
@@ -63,46 +62,75 @@ class SearchFragDetails : Fragment(){
 //        if (message != null) {
 //            binding.textView2.text = message
 //        }
-        readData(choice, item_name)
+        if (choice != null) {
+            if (item_name != null) {
+                readData(choice, item_name)
+            }
+        }
         return root
     }
 
-    private fun readData(choice: String?, item_no: String?) {
+    private fun readData(choice: String, item_no: String) {
 
         val database: DatabaseReference
         database = Firebase.database.reference
 
+        val dbase = Firebase.database
+        val myRef = dbase.getReference("inventory")
+
+//        dataSnapshot.child("Serial Number").getValue().toString()
+
         val reference = FirebaseDatabase.getInstance().getReference("inventory")
-
-        if (choice == "Serial Number"){
-            reference.child("Serial Number").get().addOnCompleteListener(OnCompleteListener {
-                fun onComple(task: Task<DataSnapshot>){
-                    if(task.isSuccessful){
-                        if (task.getResult().exists()){
-                            Toast.makeText(context, "Read Successful", Toast.LENGTH_SHORT).show()
-                            val dataSnapshot = task.getResult()
-
-                            val serial_no = dataSnapshot.child("Serial Number").getValue().toString()
-//                            val part_no = binding.textView10
-//                            val qty = binding.textView11
-//                            val date_rackin = binding.textView12
-//                            val date_rackout = binding.textView13
-//                            val rackId = binding.textView14
-                            binding.textView9.setText(serial_no)
-
-
-                        }
-                        else{
-                            Toast.makeText(context, "Part Number doesn't exist", Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                    else{
-                        Toast.makeText(context, "Failed to read", Toast.LENGTH_SHORT).show()
-                    }
-
+        // Read from the database
+        reference.child(item_no).get().addOnCompleteListener(){
+            fun onComplete(task: Task<DataSnapshot>){
+                if (task.isSuccessful){
+                    val dataSnapShot: DataSnapshot = task.getResult()
+                    binding.textView9.setText(dataSnapShot.child("Serial Number").getValue().toString())
+                    binding.textView10.setText(dataSnapShot.child("Part Number").getValue().toString())
+                    binding.textView11.setText(dataSnapShot.child("Quantity").getValue().toString())
+                    binding.textView12.setText(dataSnapShot.child("Rack in date").getValue().toString())
+                    binding.textView13.setText(dataSnapShot.child("Rack Out Date").getValue().toString())
+                    binding.textView13.setText(dataSnapShot.child("Serial Number").getValue().toString())
                 }
-            })
+            }
         }
+
+
+//        reference.get().addOnCompleteListener(OnCompleteListener<DataSnapshot> {
+//            fun onComple(task: Task<DataSnapshot>){
+//                if(task.isSuccessful){
+//                    if (task.getResult().exists()){
+//                        Toast.makeText(context, "Read Successful", Toast.LENGTH_SHORT).show()
+//                        val dataSnapshot = task.getResult()
+//
+//                        val serial_no = dataSnapshot.child("Serial Number").getValue().toString()
+//                        //                            val part_no = binding.textView10
+//                        //                            val qty = binding.textView11
+//                        //                            val date_rackin = binding.textView12
+//                        //                            val date_rackout = binding.textView13
+//                        //                            val rackId = binding.textView14
+//                        binding.textView9.setText(serial_no)
+//
+//
+//                    }
+//                    else{
+//                        Toast.makeText(context, "Part Number doesn't exist", Toast.LENGTH_SHORT).show()
+//                    }
+//                }
+//                else{
+//                    Toast.makeText(context, "Failed to read", Toast.LENGTH_SHORT).show()
+//                }
+//
+//            }
+//        })
+
+
+
+//        if (choice == "Serial Number"){
+//
+//
+//        }
 
         val textViewSerialNumber = binding.textView9
         val textViewPartNo = binding.textView10

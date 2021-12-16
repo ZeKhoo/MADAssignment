@@ -42,6 +42,11 @@
                 android:id="@+id/nav_add_inventory"
                 android:icon="@drawable/ic_baseline_add_24"
                 android:title="Details" />
+
+            <item
+                android:id="@+id/nav_displayViewActivity"
+                android:icon="@drawable/ic_baseline_backpack_24"
+                android:title="View Inventory" />
         </menu>
 
     </item>

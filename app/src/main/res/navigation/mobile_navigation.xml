@@ -54,6 +54,10 @@
         android:name="my.edu.tarc.demo2.ui.search.SearchFragDetails"
         android:label="fragment_search_frag_details"
         tools:layout="@layout/fragment_search_frag_details" />
+    <activity
+        android:id="@+id/nav_displayViewActivity"
+        android:name="my.edu.tarc.demo2.ui.search.DisplayViewActivity"
+        android:label="DisplayViewActivity" />
 
 
 </navigation>

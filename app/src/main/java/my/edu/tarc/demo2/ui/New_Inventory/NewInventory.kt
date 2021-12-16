@@ -68,7 +68,7 @@ class NewInventory : Fragment() {
         edittextQty= binding.editTextQty
         editTextRackIn = binding.editTextRackIn
         editTextRackOut = binding.editTextRackOut
-        editTextRackId = binding.editTextRackOut
+        editTextRackId = binding.editTextRackId
         binding.button.setOnClickListener{
             saveInventory()
 
@@ -131,6 +131,14 @@ class NewInventory : Fragment() {
             database.child("inventory").child(serial_number).child("Rack Id").setValue(rackId)
             Toast.makeText(context, R.string.add_success, Toast.LENGTH_SHORT).show()
         }
+
+        binding.editTextSerialNo.text.clear()
+        binding.editTextPartNo.text.clear()
+        binding.editTextQty.text.clear()
+        binding.editTextRackIn.text.clear()
+        binding.editTextRackOut.text.clear()
+        binding.editTextRackId.text.clear()
+
         return
     }
 
