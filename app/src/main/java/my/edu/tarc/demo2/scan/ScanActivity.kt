@@ -17,7 +17,6 @@ class ScanActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_scan)
 
-        // Alternative to "onActivityResult", because that is "deprecated"
         mQrResultLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
                 if (it.resultCode == Activity.RESULT_OK) {
@@ -30,10 +29,9 @@ class ScanActivity : AppCompatActivity() {
                 }
             }
 
-         //Starts scanner on Create of Overlay (you can also call this function using a button click)
+
         startScanner()
     }
-
 
     // Start the QR Scanner
     private fun startScanner() {
@@ -42,7 +40,6 @@ class ScanActivity : AppCompatActivity() {
         scanner.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE)
         // Set Text Prompt at Bottom of QR code Scanner Activity
          scanner.setPrompt("Scan Your Code Here")
-        // Start Scanner (don't use initiateScan() unless if you want to use OnActivityResult)
         mQrResultLauncher.launch(scanner.createScanIntent())
     }
 }

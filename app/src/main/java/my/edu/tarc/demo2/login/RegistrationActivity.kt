@@ -22,7 +22,7 @@ class RegistrationActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance()
-        databaseReference = database?.reference!!.child("logout")
+        databaseReference = database?.reference!!.child("profile")
 
         register()
     }
