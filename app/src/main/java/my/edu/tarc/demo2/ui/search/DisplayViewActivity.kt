@@ -37,21 +37,21 @@ class DisplayViewActivity : AppCompatActivity() {
     private fun getUserData() {
         dbref = FirebaseDatabase.getInstance().getReference("inventory")
 
-        dbref.addValueEventListener(object: ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if(snapshot.exists()){
-                    for (inventorySnapShot in snapshot.children){
-                        val user = inventorySnapShot.getValue(Inventory::class.java)
-                        inventoryArrayList.add(user!!)
-
-
-                    }
-
-                    inventoryRecycleView.adapter = Adapter(inventoryArrayList)
-                }
-            }
-
-        })
+//        dbref.addValueEventListener(object: ValueEventListener{
+//            override fun onDataChange(snapshot: DataSnapshot) {
+//                if(snapshot.exists()){
+//                    for (inventorySnapShot in snapshot.children){
+//                        val user = inventorySnapShot.getValue(Inventory::class.java)
+//                        inventoryArrayList.add(user!!)
+//
+//
+//                    }
+//
+//                    inventoryRecycleView.adapter = Adapter(inventoryArrayList)
+//                }
+//            }
+//
+//        })
 
     }
 
